@@ -26,7 +26,7 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build with Gradle
-      run: ./gradlew build
+      run: DD_CIVISIBILITY_AGENTLESS_ENABLED=true DD_API_KEY=${{ secrets.DD_API_KEY }} DD_ENV=ci ./gradlew build
 
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v4
