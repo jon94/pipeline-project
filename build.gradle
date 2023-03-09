@@ -35,3 +35,13 @@ if (project.hasProperty("dd-civisibility")) {
         options.compilerArgs.add('-Xplugin:DatadogCompilerPlugin')
     }
 }
+
+test {
+  if(project.hasProperty("dd-civisibility")) {
+    jvmArgs = [
+        "-javaagent:${configurations.ddTracerAgent.asPath}",
+        "-Ddd.service=jonlimdemo",
+        "-Ddd.civisibility.enabled=true"
+    ]
+  }
+}
