@@ -37,6 +37,10 @@ if (project.hasProperty("dd-civisibility")) {
 }
 
 test {
+    useJUnit()
+
+    maxHeapSize = '1G'
+    
   if(project.hasProperty("dd-civisibility")) {
     jvmArgs = [
         "-javaagent:${configurations.ddTracerAgent.asPath}",
