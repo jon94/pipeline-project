@@ -29,7 +29,7 @@ jobs:
       run: ./gradlew build
       
     - name: Test with Gradle
-      run: DD_CIVISIBILITY_AGENTLESS_ENABLED=true DD_API_KEY=${{ secrets.DD_API_KEY }} DD_ENV=ci ./gradlew test
+      run: DD_CIVISIBILITY_AGENTLESS_ENABLED=true DD_API_KEY=${{ secrets.DD_API_KEY }} DD_SITE=https://app.datadoghq.com DD_ENV=ci ./gradlew cleanTest test -Pdd-civisibility --rerun-tasks
 
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v4
