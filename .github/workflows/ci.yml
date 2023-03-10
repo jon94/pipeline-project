@@ -48,6 +48,7 @@ jobs:
       with:
         image-ref: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:latest'
         template: (@/contrib/junit.tpl)
+        output: junit.xml
         exit-code: '0'
         ignore-unfixed: true
         vuln-type: 'os,library'
