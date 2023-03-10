@@ -10,8 +10,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build_test:
-    name: checkout and setup jdk
+  build_test_push:
+    name: build_test_push
     runs-on: ubuntu-latest 
     steps:
     - uses: actions/checkout@v2
