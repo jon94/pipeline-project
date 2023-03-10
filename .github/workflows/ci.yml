@@ -54,3 +54,9 @@ jobs:
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
+
+    - name: install datadog cli
+      run: curl -L --fail "https://github.com/DataDog/datadog-ci/releases/latest/download/datadog-ci_linux-x64" --output "/usr/local/bin/datadog-ci" && chmod +x "/usr/local/bin/datadog-ci"
+      
+    - name: upload xml to datadog
+      run: DATADOG_API_KEY=${{ secrets.DD_API_KEY }} DD_ENV=ci datadog-ci junit upload --service jonlimdemo junit.xml
