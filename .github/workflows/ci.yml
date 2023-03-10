@@ -24,6 +24,7 @@ jobs:
   build:
     name: gradle build
     runs-on: ubuntu-latest
+    needs: [env_repo_prep]
     steps:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
@@ -34,6 +35,7 @@ jobs:
   test:
     name: gradle cleantest with datadog ci vis enabled
     runs-on: ubuntu-latest
+    needs: [env_repo_prep, build]    
     steps:
     - name: Test with Gradle
       run: DD_CIVISIBILITY_AGENTLESS_ENABLED=true DD_API_KEY=${{ secrets.DD_API_KEY }} DD_ENV=ci ./gradlew cleanTest test -Pdd-civisibility --rerun-tasks
@@ -41,6 +43,7 @@ jobs:
   docker_build_push:
     name: build and push docker image to docker repo
     runs-on: ubuntu-latest
+    needs: [env_repo_prep, build, test]     
     steps:
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v4
