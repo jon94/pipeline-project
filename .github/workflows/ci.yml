@@ -16,7 +16,6 @@ jobs:
     env:
       DOCKER_REPOSITORY: jonlimpw # name of Docker Hub ID
       IMAGE_NAME: demo-app
-      IMAGE_TAG: ${{ github.run_number }} # $GITHUB_RUN_NUMBER
       
     steps:
     - uses: actions/checkout@v2
@@ -38,8 +37,7 @@ jobs:
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v4
       with:
-        image: jonlimpw/demo-app
+        image: ${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}
         registry: docker.io
-        tags: ${{ env.IMAGE_TAG }}
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
