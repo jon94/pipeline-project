@@ -10,32 +10,27 @@ on:
     branches: [ main ]
 
 jobs:
-  env_repo_prep:
+  env_repo_prep_and_build:
     name: checkout and setup jdk
     runs-on: ubuntu-latest 
     steps:
     - uses: actions/checkout@v2
-
+    
     - name: Set up JDK 8
       uses: actions/setup-java@v1
       with:
         java-version: 8
         
-  build:
-    name: gradle build
-    runs-on: ubuntu-latest
-    needs: [env_repo_prep]
-    steps:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-
+      
     - name: Build with Gradle
       run: ./gradlew build
       
   test:
     name: gradle cleantest with datadog ci vis enabled
     runs-on: ubuntu-latest
-    needs: [env_repo_prep, build]    
+    needs: [env_repo_prep_and_build]    
     steps:
     - name: Test with Gradle
       run: DD_CIVISIBILITY_AGENTLESS_ENABLED=true DD_API_KEY=${{ secrets.DD_API_KEY }} DD_ENV=ci ./gradlew cleanTest test -Pdd-civisibility --rerun-tasks
@@ -43,7 +38,7 @@ jobs:
   docker_build_push:
     name: build and push docker image to docker repo
     runs-on: ubuntu-latest
-    needs: [env_repo_prep, build, test]     
+    needs: [env_repo_prep_and_build, test]    
     steps:
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v4
