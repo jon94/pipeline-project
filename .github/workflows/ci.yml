@@ -60,3 +60,13 @@ jobs:
       
     - name: upload xml to datadog
       run: DATADOG_API_KEY=${{ secrets.DD_API_KEY }} DD_ENV=ci datadog-ci junit upload --service jonlimdemo junit.xml
+      
+    - name: Run Trivy vulnerability scanner output table
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:latest'
+        format: 'table'
+        exit-code: '0'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'      
