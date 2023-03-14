@@ -10,6 +10,19 @@ on:
     branches: [ main ]
 
 jobs:
+  synthetics_ci_demo:
+    name: synthetics-ci-datadog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run Datadog Synthetics tests
+        uses: DataDog/synthetics-ci-github-action@v0.10.0
+        with:
+          api_key: ${{secrets.DD_API_KEY}}
+          app_key: ${{secrets.DD_APP_KEY}}
+          public_ids: 'aqg-ssc-mah'
+          
   build_test_push:
     name: build_test_push
     runs-on: ubuntu-latest 
