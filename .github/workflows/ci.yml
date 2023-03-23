@@ -56,7 +56,9 @@ jobs:
         severity: 'CRITICAL,HIGH'
 
     - name: Push Docker Image
-
+      run: |
+        ls
+        
     - name: install datadog cli
       run: curl -L --fail "https://github.com/DataDog/datadog-ci/releases/latest/download/datadog-ci_linux-x64" --output "/usr/local/bin/datadog-ci" && chmod +x "/usr/local/bin/datadog-ci"
       
