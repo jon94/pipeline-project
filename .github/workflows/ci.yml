@@ -12,6 +12,7 @@ on:
 jobs:     
   build_test_push:
     name: build_test_push
+    permissions: write-all
     runs-on: ubuntu-latest 
     env:
       DOCKER_REPOSITORY: jonlimpw # name of Docker Hub ID
