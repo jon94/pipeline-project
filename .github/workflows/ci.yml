@@ -44,59 +44,59 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Run Trivy vulnerability scanner SARIF
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:latest'
-        format: 'sarif'
-        output: 'trivy-results.sarif'
+#     - name: Run Trivy vulnerability scanner SARIF
+#       uses: aquasecurity/trivy-action@master
+#       with:
+#         image-ref: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:latest'
+#         format: 'sarif'
+#         output: 'trivy-results.sarif'
 
-    - name: Upload Trivy scan results to GitHub Security tab
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: 'trivy-results.sarif'
+#     - name: Upload Trivy scan results to GitHub Security tab
+#       uses: github/codeql-action/upload-sarif@v2
+#       with:
+#         sarif_file: 'trivy-results.sarif'
 
-    - name: Run Trivy vulnerability scanner Junit
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:latest'
-        format: 'template'
-        template: '@/contrib/junit.tpl'
-        output: junit.xml
-        exit-code: '0'
-        ignore-unfixed: true
-        vuln-type: 'os,library'
-        severity: 'CRITICAL,HIGH'
+#     - name: Run Trivy vulnerability scanner Junit
+#       uses: aquasecurity/trivy-action@master
+#       with:
+#         image-ref: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:latest'
+#         format: 'template'
+#         template: '@/contrib/junit.tpl'
+#         output: junit.xml
+#         exit-code: '0'
+#         ignore-unfixed: true
+#         vuln-type: 'os,library'
+#         severity: 'CRITICAL,HIGH'
 
     - name: Push Docker Image
       run: |
         ls
         
-    - name: install datadog cli
-      run: curl -L --fail "https://github.com/DataDog/datadog-ci/releases/latest/download/datadog-ci_linux-x64" --output "/usr/local/bin/datadog-ci" && chmod +x "/usr/local/bin/datadog-ci"
+#     - name: install datadog cli
+#       run: curl -L --fail "https://github.com/DataDog/datadog-ci/releases/latest/download/datadog-ci_linux-x64" --output "/usr/local/bin/datadog-ci" && chmod +x "/usr/local/bin/datadog-ci"
       
-    - name: upload xml to datadog
-      run: DATADOG_API_KEY=${{ secrets.DD_API_KEY }} DD_ENV=ci datadog-ci junit upload --service jonlimdemo junit.xml
+#     - name: upload xml to datadog
+#       run: DATADOG_API_KEY=${{ secrets.DD_API_KEY }} DD_ENV=ci datadog-ci junit upload --service jonlimdemo junit.xml
       
-    - name: Run Trivy vulnerability scanner output table
-      uses: aquasecurity/trivy-action@master
-      with:
-        image-ref: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:latest'
-        format: 'table'
-        exit-code: '0'
-        ignore-unfixed: true
-        vuln-type: 'os,library'
-        severity: 'CRITICAL,HIGH'
+#     - name: Run Trivy vulnerability scanner output table
+#       uses: aquasecurity/trivy-action@master
+#       with:
+#         image-ref: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:latest'
+#         format: 'table'
+#         exit-code: '0'
+#         ignore-unfixed: true
+#         vuln-type: 'os,library'
+#         severity: 'CRITICAL,HIGH'
         
-  synthetics_demo:
-    name: synthetics-datadog
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Run Datadog Synthetics tests
-        uses: DataDog/synthetics-ci-github-action@v0.10.0
-        with:
-          api_key: ${{secrets.DD_API_KEY}}
-          app_key: ${{secrets.DD_APP_KEY}}
-          public_ids: '9au-z9f-u2z, bpf-frs-bzc'        
+#   synthetics_demo:
+#     name: synthetics-datadog
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#       - name: Run Datadog Synthetics tests
+#         uses: DataDog/synthetics-ci-github-action@v0.10.0
+#         with:
+#           api_key: ${{secrets.DD_API_KEY}}
+#           app_key: ${{secrets.DD_APP_KEY}}
+#           public_ids: '9au-z9f-u2z, bpf-frs-bzc'        
