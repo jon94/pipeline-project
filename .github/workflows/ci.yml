@@ -99,4 +99,4 @@ jobs:
         with:
           api_key: ${{secrets.DD_API_KEY}}
           app_key: ${{secrets.DD_APP_KEY}}
-          public_ids: '3vn-eja-uy2'       
+          public_ids: 'tkw-uzw-pcv'       
