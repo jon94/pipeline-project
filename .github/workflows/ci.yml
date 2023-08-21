@@ -88,15 +88,15 @@ jobs:
 #         vuln-type: 'os,library'
 #         severity: 'CRITICAL,HIGH'
         
-  synthetics_demo:
-    name: synthetics-datadog
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Run Datadog Synthetics tests
-        uses: DataDog/synthetics-ci-github-action@v0.10.0
-        with:
-          api_key: ${{secrets.DD_API_KEY}}
-          app_key: ${{secrets.DD_APP_KEY}}
-          public_ids: 'riw-dvs-xcy'       
+  # synthetics_demo:
+  #   name: synthetics-datadog
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Run Datadog Synthetics tests
+  #       uses: DataDog/synthetics-ci-github-action@v0.10.0
+  #       with:
+  #         api_key: ${{secrets.DD_API_KEY}}
+  #         app_key: ${{secrets.DD_APP_KEY}}
+  #         public_ids: 'riw-dvs-xcy'       
